@@ -24,6 +24,27 @@ const api = (function(){
     return fetch(`${BASE_URL}/items/${id}`, {method: 'DELETE',});
   }
 
+  function listApiFetch(...args) {
+    let error;
+    fetch(...args)
+    .then(res => {
+    if (!res.ok) {
+    error = { code: res.status };
+  }
+    if (!res.headers.get('content-type').includes('json')) {
+    error.message = res.statusText;
+    return Promise.reject(error);
+  }
+    return res.json();
+  })
+    .then(data => {
+    if (error) {
+    error.message = data.message;
+    return Promise.reject(error);
+  }
+    return data;
+  });
+}
   
 
   return {
