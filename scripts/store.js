@@ -31,7 +31,7 @@ const store = (function(){
   const findAndUpdate = function(id, newData) {
     const currentItem = this.items.find (item => item.id === id);
     Object.assign(currentItem, newData);
-  }
+  };
 
   return {
     items: [],
